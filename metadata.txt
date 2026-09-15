@@ -1,0 +1,40 @@
+Assignment 2: Analyzing Video View Data
+
+Assignment completion time (rounded to nearest hour): 
+
+[x] the appropriate choice: [] Worked alone   [] Completed with a partner
+
+Partner 1:
+  Name:
+  Net-ID:
+
+Partner 2:
+  Name: 
+  Net-Id: 
+
+If you worked with a partner, use the space below to describe your collaboration.
+Where/when did you work on the assignment? Who took the lead on different parts? 
+
+
+
+
+
+Did you use generative AI in any capacity for this assignment? [] Yes   [] No
+
+If so, briefly describe how you used it in the space below, and certify the 
+prompts below this space. Which parts of the assignment (files, methods, etc.) 
+did you use it for? In what ways (if any) was it helpful, and in what ways 
+(if any) was it unhelpful or detrimental. Would you change your approach to 
+generative AI based on your experience from this assignment?
+
+
+
+
+
+
+[] The code in this submission includes comments that fully document the
+    places (e.g. classes and methods) that were at least partially written by
+    generative AI.
+[] A file "ai-logs.json" is included in the submission that comprises the 
+    complete chat logs from all generative AI sessions pertaining to this 
+    assignment.
