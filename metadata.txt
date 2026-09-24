@@ -2,24 +2,23 @@ Assignment 2: Analyzing Video View Data
 
 Assignment completion time (rounded to nearest hour): 
 
-[x] the appropriate choice: [] Worked alone   [] Completed with a partner
+[x] the appropriate choice: [X] Worked alone   [] Completed with a partner
 
 Partner 1:
-  Name:
-  Net-ID:
+  Name: Braddy Maria
+  Net-ID: Bm734
 
-Partner 2:
-  Name: 
-  Net-Id: 
 
 If you worked with a partner, use the space below to describe your collaboration.
 Where/when did you work on the assignment? Who took the lead on different parts? 
 
+I worked alone for this assignment, I started working about a week in advance to the
+due date working at times in office hours when needed and when possible.
 
 
 
 
-Did you use generative AI in any capacity for this assignment? [] Yes   [] No
+Did you use generative AI in any capacity for this assignment? [] Yes   [X] No
 
 If so, briefly describe how you used it in the space below, and certify the 
 prompts below this space. Which parts of the assignment (files, methods, etc.) 

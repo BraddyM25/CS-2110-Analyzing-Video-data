@@ -26,27 +26,27 @@ public class DataAnalysisTest {
         View[] views = fromFile("small.txt");
         assertEquals(20, views.length); // correct number of entries
 
-        View[] expected = new View[] {
-            new View("A", "v4", LocalDateTime.of(2024, 4, 15, 2, 35, 0)),
-            new View("A", "v6", LocalDateTime.of(2024, 4, 15, 14, 34, 0)),
-            new View("C", "v6", LocalDateTime.of(2024, 4, 15, 19, 56, 0)),
-            new View("D", "v1", LocalDateTime.of(2024, 4, 15, 11, 54, 0)),
-            new View("B", "v6", LocalDateTime.of(2024, 4, 15, 8, 44, 0)),
-            new View("C", "v5", LocalDateTime.of(2024, 4, 15, 6, 45, 0)),
-            new View("B", "v5", LocalDateTime.of(2010, 8, 7, 3, 43, 47)),
-            new View("A", "v2", LocalDateTime.of(2009, 6, 29, 23, 17, 15)),
-            new View("A", "v1", LocalDateTime.of(2024, 4, 15, 21, 14, 0)),
-            new View("D", "v5", LocalDateTime.of(2013, 9, 10, 16, 38, 1)),
-            new View("B", "v3", LocalDateTime.of(2024, 4, 15, 3, 5, 0)),
-            new View("C", "v5", LocalDateTime.of(2024, 4, 15, 8, 51, 0)),
-            new View("B", "v6", LocalDateTime.of(2024, 4, 15, 20, 44, 0)),
-            new View("C", "v1", LocalDateTime.of(2024, 4, 15, 5, 44, 0)),
-            new View("C", "v1", LocalDateTime.of(2024, 4, 15, 7, 55, 0)),
-            new View("C", "v2", LocalDateTime.of(2024, 4, 15, 11, 22, 0)),
-            new View("D", "v3", LocalDateTime.of(2024, 4, 15, 8, 9, 0)),
-            new View("A", "v4", LocalDateTime.of(2024, 4, 15, 8, 29, 0)),
-            new View("D", "v2", LocalDateTime.of(2024, 4, 15, 14, 37, 0)),
-            new View("C", "v1", LocalDateTime.of(2008, 7, 18, 13, 2, 1)),
+        View[] expected = new View[]{
+                new View("A", "v4", LocalDateTime.of(2024, 4, 15, 2, 35, 0)),
+                new View("A", "v6", LocalDateTime.of(2024, 4, 15, 14, 34, 0)),
+                new View("C", "v6", LocalDateTime.of(2024, 4, 15, 19, 56, 0)),
+                new View("D", "v1", LocalDateTime.of(2024, 4, 15, 11, 54, 0)),
+                new View("B", "v6", LocalDateTime.of(2024, 4, 15, 8, 44, 0)),
+                new View("C", "v5", LocalDateTime.of(2024, 4, 15, 6, 45, 0)),
+                new View("B", "v5", LocalDateTime.of(2010, 8, 7, 3, 43, 47)),
+                new View("A", "v2", LocalDateTime.of(2009, 6, 29, 23, 17, 15)),
+                new View("A", "v1", LocalDateTime.of(2024, 4, 15, 21, 14, 0)),
+                new View("D", "v5", LocalDateTime.of(2013, 9, 10, 16, 38, 1)),
+                new View("B", "v3", LocalDateTime.of(2024, 4, 15, 3, 5, 0)),
+                new View("C", "v5", LocalDateTime.of(2024, 4, 15, 8, 51, 0)),
+                new View("B", "v6", LocalDateTime.of(2024, 4, 15, 20, 44, 0)),
+                new View("C", "v1", LocalDateTime.of(2024, 4, 15, 5, 44, 0)),
+                new View("C", "v1", LocalDateTime.of(2024, 4, 15, 7, 55, 0)),
+                new View("C", "v2", LocalDateTime.of(2024, 4, 15, 11, 22, 0)),
+                new View("D", "v3", LocalDateTime.of(2024, 4, 15, 8, 9, 0)),
+                new View("A", "v4", LocalDateTime.of(2024, 4, 15, 8, 29, 0)),
+                new View("D", "v2", LocalDateTime.of(2024, 4, 15, 14, 37, 0)),
+                new View("C", "v1", LocalDateTime.of(2008, 7, 18, 13, 2, 1)),
         };
 
         assertArrayEquals(expected, views);
@@ -90,7 +90,7 @@ public class DataAnalysisTest {
     void testCountDistinctUsersSmall() throws IOException {
         View[] views = fromFile("small.txt");
         assertEquals(2, countDistinctUsersInTimeInterval(views,
-                LocalDateTime.of(2009,1,1,0,0), LocalDateTime.of(2012,1,1,0,0)));
+                LocalDateTime.of(2009, 1, 1, 0, 0), LocalDateTime.of(2012, 1, 1, 0, 0)));
     }
 
     @DisplayName("WHEN we call `lastKViewedByUser()` on the released `small.txt` data with k=2 and "
@@ -112,5 +112,98 @@ public class DataAnalysisTest {
         View[] views = fromFile("small.txt");
         String fan = mostObsessedViewer(views, "v5");
         assertEquals("C", fan);
+    }
+    // =========================================================================
+    // countDistinctUsersInTimeInterval Tests
+    // =========================================================================
+
+    @DisplayName("WHEN multiple views in the interval belong to the same user, THEN the user is only counted once.")
+    @Test
+    void testCountDistinctUsersDuplicateInInterval() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0)),
+                new View("A", "v2", LocalDateTime.of(2026, 1, 2, 10, 0)),
+                new View("B", "v1", LocalDateTime.of(2026, 1, 3, 10, 0))
+        };
+        assertEquals(2, countDistinctUsersInTimeInterval(views,
+                LocalDateTime.of(2026, 1, 1, 0, 0),
+                LocalDateTime.of(2026, 1, 4, 0, 0)));
+    }
+
+    @DisplayName("WHEN the time interval contains no views, THEN it returns 0.")
+    @Test
+    void testCountDistinctUsersEmptyInterval() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0))
+        };
+        assertEquals(0, countDistinctUsersInTimeInterval(views,
+                LocalDateTime.of(2025, 1, 1, 0, 0),
+                LocalDateTime.of(2025, 12, 31, 23, 59)));
+    }
+
+    // =========================================================================
+    // lastKViewedByUser Tests
+    // =========================================================================
+
+    @DisplayName("WHEN the user has viewed fewer than k distinct videos, THEN it returns all distinct videos viewed.")
+    @Test
+    void testLastKUsersFewerThanK() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0)),
+                new View("A", "v1", LocalDateTime.of(2026, 1, 2, 10, 0)), // Duplicate view of v1
+                new View("A", "v2", LocalDateTime.of(2026, 1, 3, 10, 0))
+        };
+        View[] lastK = lastKViewedByUser(views, "A", 5);
+
+        assertEquals(2, lastK.length);
+        lastK = deduplicatingSort(lastK, BY_VIDEO_ID, KEEP_ALL);
+
+        // It should keep the latest timestamp for v1
+        assertEquals(new View("A", "v1", LocalDateTime.of(2026, 1, 2, 10, 0)), lastK[0]);
+        assertEquals(new View("A", "v2", LocalDateTime.of(2026, 1, 3, 10, 0)), lastK[1]);
+    }
+
+    @DisplayName("WHEN the user has viewed more than k distinct videos, THEN it strictly returns the latest k.")
+    @Test
+    void testLastKUsersMoreThanK() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0)),
+                new View("A", "v2", LocalDateTime.of(2026, 1, 2, 10, 0)),
+                new View("A", "v3", LocalDateTime.of(2026, 1, 3, 10, 0)),
+                new View("A", "v4", LocalDateTime.of(2026, 1, 4, 10, 0))
+        };
+        View[] lastK = lastKViewedByUser(views, "A", 2);
+
+        assertEquals(2, lastK.length);
+        lastK = deduplicatingSort(lastK, BY_VIDEO_ID, KEEP_ALL);
+
+        // Should only contain the two most recently watched videos (v3 and v4)
+        assertEquals(new View("A", "v3", LocalDateTime.of(2026, 1, 3, 10, 0)), lastK[0]);
+        assertEquals(new View("A", "v4", LocalDateTime.of(2026, 1, 4, 10, 0)), lastK[1]);
+    }
+
+    // =========================================================================
+    // mostObsessedViewer Tests
+    // =========================================================================
+
+    @DisplayName("WHEN the queried videoID has no views, THEN mostObsessedViewer returns null.")
+    @Test
+    void testMostObsessedViewerNoViews() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0))
+        };
+        assertNull(mostObsessedViewer(views, "v99"));
+    }
+
+    @DisplayName("WHEN multiple users have viewed a video, THEN it returns the user with the highest view count.")
+    @Test
+    void testMostObsessedViewerClearWinner() {
+        View[] views = new View[]{
+                new View("A", "v1", LocalDateTime.of(2026, 1, 1, 10, 0)),
+                new View("B", "v1", LocalDateTime.of(2026, 1, 2, 10, 0)),
+                new View("B", "v1", LocalDateTime.of(2026, 1, 3, 10, 0)),
+                new View("C", "v1", LocalDateTime.of(2026, 1, 4, 10, 0))
+        };
+        assertEquals("B", mostObsessedViewer(views, "v1"));
     }
 }
